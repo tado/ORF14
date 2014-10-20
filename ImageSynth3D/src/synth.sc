@@ -10,7 +10,7 @@ SynthDef("fx", {
 	var in, out;
 	in = In.ar(3, 2);
 	in = GVerb.ar(in, 100, 1, drylevel:0.5);
-	out = (in*0.75).softclip;
+	out = (LeakDC.ar(in)*0.75).softclip;
 	Out.ar(0, out);
 }).store;
 )
