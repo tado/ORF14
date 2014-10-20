@@ -3,70 +3,47 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(255);
+    ofBackground(0);
     ofxSuperColliderServer::init();
     
     fx = new ofxSCSynth("fx");
     fx->create();
-    
-    for (int i = 0; i < filterSize; i++) {
-        synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(1.1, i) + 100);
-        synth[i]->set("detune", ofRandom(0.9,1.1));
-        synth[i]->create();
-    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    scanX = (ofGetFrameNum() - startFrame) % ofGetWidth();
-    for (int i = 0; i < filterSize; i++) {
-        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 2.0);
+    for (int i = 0; i < imageSynths.size(); i++) {
+        imageSynths[i]->update();
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(255);
-    if (inputImage.getWidth() > 0) {
-        inputImage.draw(0, 0, ofGetWidth(), ofGetHeight());
-        
-        ofSetColor(255, 0, 0);
-        ofLine(scanX, 0, scanX, ofGetHeight());
+    for (int i = 0; i < imageSynths.size(); i++) {
+        imageSynths[i]->draw();
     }
 }
 
 void ofApp::dragEvent(ofDragInfo dragInfo){
     vector<ofImage> draggedImages;
     if( dragInfo.files.size() > 0 ){
-        
-        startFrame = ofGetFrameNum();
-        
         // get image data
         draggedImages.assign( dragInfo.files.size(), ofImage() );
         for(unsigned int k = 0; k < dragInfo.files.size(); k++){
             draggedImages[k].loadImage(dragInfo.files[k]);
         }
-        draggedImages[0].resize(ofGetWidth(), ofGetHeight());
-        inputImage = synthImage = draggedImages[0];
         
-        // modify image
-        synthImage.resize(ofGetWidth(), filterSize);
-        cv::Mat src_mat, dst_mat;
-        src_mat = ofxCv::toCv(inputImage);
-        //copyGray(src_mat, dst_mat);
-        cv::medianBlur(src_mat, dst_mat, 11);
-        ofxCv::toOf(dst_mat, inputImage);
-        synthImage.setImageType(OF_IMAGE_GRAYSCALE);
-        synthImage.update();
+        ImageSynth *s = new ImageSynth(draggedImages[0], ofVec2f(mouseX, mouseY));
+        imageSynths.push_back(s);
     }
 }
 
 ofApp::~ofApp(){
     fx->free();
-    for (int i = 0; i < filterSize; i++) {
-        synth[i]->free();
+    for (int i = 0; i < imageSynths.size(); i++) {
+        delete imageSynths[i];
     }
+    imageSynths.clear();
 }
 
 //--------------------------------------------------------------
