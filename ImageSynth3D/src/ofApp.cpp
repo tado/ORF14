@@ -19,9 +19,13 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofEnableDepthTest();
+    cam.begin();
     for (int i = 0; i < imageSynths.size(); i++) {
         imageSynths[i]->draw();
     }
+    cam.end();
+    ofDisableDepthTest();
 }
 
 void ofApp::dragEvent(ofDragInfo dragInfo){
@@ -33,7 +37,9 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
             draggedImages[k].loadImage(dragInfo.files[k]);
         }
         
-        ImageSynth *s = new ImageSynth(draggedImages[0], ofVec2f(mouseX, mouseY));
+        float size = 500;
+        ofVec3f pos = ofVec3f(ofRandom(-size, size), ofRandom(-size, size), ofRandom(-size, size));
+        ImageSynth *s = new ImageSynth(draggedImages[0], pos);
         imageSynths.push_back(s);
     }
 }

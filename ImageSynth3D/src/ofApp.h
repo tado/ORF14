@@ -26,4 +26,5 @@ public:
     
     ofxSCSynth *fx;
     vector<ImageSynth*> imageSynths;
+    ofEasyCam cam;
 };
