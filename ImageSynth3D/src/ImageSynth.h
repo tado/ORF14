@@ -9,7 +9,7 @@ public:
     void update();
     void draw();
     
-    static const int filterSize = 20;
+    static const int filterSize = 40;
     ofxSCSynth *synth[filterSize];
     int scanX;
     int startFrame;

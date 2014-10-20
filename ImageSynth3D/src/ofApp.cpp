@@ -5,7 +5,8 @@
 void ofApp::setup(){
     ofBackground(0);
     ofxSuperColliderServer::init();
-    
+    ofSetLineWidth(3.0);
+
     fx = new ofxSCSynth("fx");
     fx->create();
 }
