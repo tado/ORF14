@@ -18,4 +18,6 @@ public:
     float startTime;
     ofVec3f rot;
     ofVec3f rotSpeed;
+    
+    static const float baseSpeed = 0.05;
 };

@@ -20,7 +20,7 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     
     // init rotation
     rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
-    rotSpeed = ofVec3f(ofRandom(-0.1, 0.1), ofRandom(-0.1, 0.1), ofRandom(-0.1, 0.1));
+    rotSpeed = ofVec3f(ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed));
 }
 
 void ImageSynth::update(){
@@ -36,11 +36,7 @@ void ImageSynth::draw(){
     if (inputImage.getWidth() > 0) {
         ofPushMatrix();
         ofTranslate(pos);
-        /*
-        ofRotateX(ofGetElapsedTimef() - startTime);
-        ofRotateY((ofGetElapsedTimef() - startTime) * 1.2);
-        ofRotateZ((ofGetElapsedTimef() - startTime) * 1.3);
-         */
+
         ofRotateX(rot.x);
         ofRotateY(rot.y);
         ofRotateZ(rot.z);
