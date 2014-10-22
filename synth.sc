@@ -9,8 +9,8 @@ SynthDef("simpleSine", {
 SynthDef("fx", {
 	var in, out;
 	in = In.ar(3, 2);
-	in = GVerb.ar(in, roomsize: 80, revtime: 1);
-	out = LeakDC.ar(in);
+	out = GVerb.ar(LeakDC.ar(in), roomsize: 80, revtime: 1);
+	//out = LeakDC.ar(in);
 	Out.ar(0, out);
 }).store;
 )

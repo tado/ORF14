@@ -94,13 +94,16 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         
         // modify image
         synthImage.resize(ofGetWidth(), filterSize);
-        cv::Mat src_mat, dst_mat;
-        src_mat = ofxCv::toCv(inputImage);
+        //cv::Mat src_mat, dst_mat;
+        //src_mat = ofxCv::toCv(inputImage);
         //copyGray(src_mat, dst_mat);
-        cv::medianBlur(src_mat, dst_mat, 11);
-        ofxCv::toOf(dst_mat, inputImage);
+        //cv::medianBlur(src_mat, dst_mat, 11);
+        //ofxCv::toOf(dst_mat, inputImage);
         synthImage.setImageType(OF_IMAGE_GRAYSCALE);
         synthImage.update();
+        
+        //reset scanX
+        scanX = 0;
     }
 }
 
