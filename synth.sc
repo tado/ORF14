@@ -9,9 +9,8 @@ SynthDef("simpleSine", {
 SynthDef("fx", {
 	var in, out;
 	in = In.ar(3, 2);
-	//8.do({ in = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.01, 0.1),rrand(0.01, 0.1)], 0.04, 0.08), 1.0) });
-	in = GVerb.ar(in, 100, 1, drylevel:0.5);
-	out = (in*0.75).softclip;
+	in = GVerb.ar(in, roomsize: 80, revtime: 1);
+	out = LeakDC.ar(in);
 	Out.ar(0, out);
 }).store;
 )

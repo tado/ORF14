@@ -1,8 +1,8 @@
 <group>
 	<auto_scan>1</auto_scan>
-	<scan_speed>0.8</scan_speed>
-	<freq_ratio>1.1005</freq_ratio>
+	<scan_speed>0.85</scan_speed>
+	<freq_ratio>1.1065</freq_ratio>
 	<freq_offset>80</freq_offset>
 <group/>
-<amplitude>0.19</amplitude>
+<amplitude>0.02</amplitude>
 </group>
