@@ -23,13 +23,20 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    ofImage inputImage, synthImage;
+    void ratioChanged(float & ratio);
+    void freqOffsetChanged(float & freqOffset);
     
+    ofImage inputImage, synthImage;
+
     static const int filterSize = 100;
     ofxSCSynth *synth[filterSize];
     ofxSCSynth *fx;
-    int scanX;
+    float scanX;
     int startFrame;
     
+    ofxPanel gui;
+    ofxToggle autoScan;
     ofxFloatSlider ratio;
+    ofxFloatSlider freqOffset;
+    ofxFloatSlider scanSpeed;
 };

@@ -3,23 +3,47 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(255);
+    ofBackground(0);
     ofxSuperColliderServer::init();
+    
     
     fx = new ofxSCSynth("fx");
     fx->create();
     
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(1.1, i) + 100);
-        synth[i]->set("detune", ofRandom(0.9,1.1));
+        synth[i]->set("detune", ofRandom(0.9,1.15));
         synth[i]->create();
+    }
+    
+    ratio.addListener(this, &ofApp::ratioChanged);
+    freqOffset.addListener(this, &ofApp::freqOffsetChanged);
+
+    gui.setup();
+    gui.add(autoScan.setup("auto scan", true));
+    gui.add(scanSpeed.setup("scan speed", 1.0, 0.0, 10.0));
+    gui.add(ratio.setup("freq ratio", 1.15, 1.0, 1.3));
+    gui.add(freqOffset.setup("freq offset", 20, 0, 400));
+    gui.loadFromFile("settings.xml");
+    
+    
+    for (int i = 0; i < filterSize; i++) {
+        synth[i]->set("freq", powf(ratio, i) + freqOffset);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    scanX = (ofGetFrameNum() - startFrame) % ofGetWidth();
+    if (autoScan) {
+        scanX += scanSpeed;
+        if (scanX > ofGetWidth()) {
+            scanX = 0;
+        }
+    } else {
+        if (mouseX > 0 && mouseX < ofGetWidth()) {
+            scanX = mouseX;
+        }
+    }
     for (int i = 0; i < filterSize; i++) {
         synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 2.0);
     }
@@ -27,12 +51,29 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(255);
+
     if (inputImage.getWidth() > 0) {
+        ofSetColor(255);
         inputImage.draw(0, 0, ofGetWidth(), ofGetHeight());
-        
-        ofSetColor(255, 0, 0);
+        ofSetColor(127);
+        ofSetLineWidth(3.0);
         ofLine(scanX, 0, scanX, ofGetHeight());
+        ofSetLineWidth(1.0);
+    }
+    
+    ofSetColor(255);
+    gui.draw();
+}
+
+void ofApp::ratioChanged(float & ratio){
+    for (int i = 0; i < filterSize; i++) {
+        synth[i]->set("freq", powf(ratio, i) + freqOffset);
+    }
+}
+
+void ofApp::freqOffsetChanged(float & freqOffset){
+    for (int i = 0; i < filterSize; i++) {
+        synth[i]->set("freq", powf(ratio, i) + freqOffset);
     }
 }
 
