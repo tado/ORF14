@@ -21,9 +21,10 @@ void ofApp::setup(){
 
     gui.setup();
     gui.add(autoScan.setup("auto scan", true));
-    gui.add(scanSpeed.setup("scan speed", 1.0, 0.0, 10.0));
+    gui.add(scanSpeed.setup("scan speed", 1.0, 0.0, 5.0));
     gui.add(ratio.setup("freq ratio", 1.15, 1.0, 1.3));
     gui.add(freqOffset.setup("freq offset", 20, 0, 400));
+    gui.add(amp.setup("amplitude", 0.1, 0.0, 1.0));
     gui.loadFromFile("settings.xml");
     
     
@@ -45,7 +46,7 @@ void ofApp::update(){
         }
     }
     for (int i = 0; i < filterSize; i++) {
-        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 2.0);
+        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) * amp);
     }
 }
 

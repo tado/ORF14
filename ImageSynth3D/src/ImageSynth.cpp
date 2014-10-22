@@ -15,10 +15,12 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     inputImage = synthImage = image;
     
     // modify image
-    //inputImage.resize(ofGetWidth(), ofGetHeight());
     synthImage.resize(ofGetWidth(), filterSize);
     synthImage.setImageType(OF_IMAGE_GRAYSCALE);
-    //synthImage.update();
+    
+    // init rotation
+    rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
+    rotSpeed = ofVec3f(ofRandom(-0.1, 0.1), ofRandom(-0.1, 0.1), ofRandom(-0.1, 0.1));
 }
 
 void ImageSynth::update(){
@@ -34,9 +36,16 @@ void ImageSynth::draw(){
     if (inputImage.getWidth() > 0) {
         ofPushMatrix();
         ofTranslate(pos);
+        /*
         ofRotateX(ofGetElapsedTimef() - startTime);
         ofRotateY((ofGetElapsedTimef() - startTime) * 1.2);
         ofRotateZ((ofGetElapsedTimef() - startTime) * 1.3);
+         */
+        ofRotateX(rot.x);
+        ofRotateY(rot.y);
+        ofRotateZ(rot.z);
+        rot += rotSpeed;
+        
         ofSetColor(255, 180);
         inputImage.draw(-inputImage.getWidth()/2.0, -inputImage.getHeight()/2.0);
         ofSetColor(255);

@@ -39,4 +39,5 @@ public:
     ofxFloatSlider ratio;
     ofxFloatSlider freqOffset;
     ofxFloatSlider scanSpeed;
+    ofxFloatSlider amp;
 };

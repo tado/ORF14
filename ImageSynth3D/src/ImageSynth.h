@@ -16,4 +16,6 @@ public:
     ofImage inputImage, synthImage;
     ofVec3f pos;
     float startTime;
+    ofVec3f rot;
+    ofVec3f rotSpeed;
 };

@@ -9,8 +9,8 @@ SynthDef("simpleSine", {
 SynthDef("fx", {
 	var in, out;
 	in = In.ar(3, 2);
-	in = GVerb.ar(in, 100, 1, drylevel:0.5);
-	out = (LeakDC.ar(in)*0.75).softclip;
+	in = GVerb.ar(in, 100, 1, drylevel:0.1);
+	out = LeakDC.ar(in);
 	Out.ar(0, out);
 }).store;
 )
