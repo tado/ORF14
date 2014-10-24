@@ -25,11 +25,9 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
 
 void ImageSynth::update(){
     scanX = (ofGetFrameNum() - startFrame) % int(synthImage.getWidth());
-    //if (ofGetFrameNum() % 4 == 0) {
     for (int i = 0; i < filterSize; i++) {
         synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize));
     }
-    //}
 }
 
 void ImageSynth::draw(){

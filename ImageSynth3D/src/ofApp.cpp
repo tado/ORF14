@@ -3,6 +3,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFrameRate(60);
     ofBackground(0);
     ofxSuperColliderServer::init();
     ofSetLineWidth(3.0);
@@ -55,7 +56,22 @@ ofApp::~ofApp(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key == 'a') {
+        if (imageSynths.size()>0) {
+            for (int i = 0; i < imageSynths[0]->filterSize; i++) {
+                imageSynths[0]->synth[i]->free();
+            }
+            imageSynths.pop_front();
+        }
+    }
+    if (key == 's') {
+        if (imageSynths.size()>0) {
+            for (int i = 0; i < imageSynths[imageSynths.size()-1]->filterSize; i++) {
+                imageSynths[imageSynths.size()-1]->synth[i]->free();
+            }
+            imageSynths.pop_back();
+        }
+    }
 }
 
 //--------------------------------------------------------------

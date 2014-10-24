@@ -25,6 +25,6 @@ public:
     void gotMessage(ofMessage msg);
     
     ofxSCSynth *fx;
-    vector<ImageSynth*> imageSynths;
+    deque<ImageSynth*> imageSynths;
     ofEasyCam cam;
 };
