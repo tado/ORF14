@@ -18,16 +18,38 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     synthImage.resize(ofGetWidth(), filterSize);
     synthImage.setImageType(OF_IMAGE_GRAYSCALE);
     
+    cv::Mat src_mat, dst_mat;
+    src_mat = ofxCv::toCv(inputImage);
+    cv::medianBlur(src_mat, dst_mat, 101);
+    ofxCv::toOf(dst_mat, depthImage);
+    depthImage.update();
+    
     // init rotation
     rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
     rotSpeed = ofVec3f(ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed));
+    
+    mesh.setMode(OF_PRIMITIVE_TRIANGLES);
+    createMesh();
 }
 
 void ImageSynth::update(){
+    sumLevel = 0;
     scanX = (ofGetFrameNum() - startFrame) % int(synthImage.getWidth());
     for (int i = 0; i < filterSize; i++) {
         synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize));
     }
+    
+    /*
+    float mod = sin(scanX / 100.0) * 4.0;
+    for(int y = 0; y < ySteps; y++) {
+        for(int x = 0; x < xSteps; x++) {
+            int i = y * xSteps + x;
+            mesh.setVertex(i, ofVec3f(x * stepSize - inputImage.getWidth()/2.0,
+                                      y * stepSize - inputImage.getHeight()/2.0,
+                                      mod * (depthImage.getColor(x * stepSize, y * stepSize).getBrightness() - 127)));
+        }
+    }
+     */
 }
 
 void ImageSynth::draw(){
@@ -40,11 +62,14 @@ void ImageSynth::draw(){
             ofRotateZ(rot.z);
             rot += rotSpeed;
         
-            ofSetColor(255, 200);
-            inputImage.draw(-inputImage.getWidth()/2.0, -inputImage.getHeight()/2.0);
             ofSetColor(255);
-            float x = (ofGetFrameNum() - startFrame) % int(inputImage.getWidth()) - inputImage.getWidth()/2;;
-            ofLine(x, -inputImage.getHeight()/2.0, x, inputImage.getHeight()/2.0);
+            inputImage.getTextureReference().bind();
+            mesh.draw();
+            inputImage.getTextureReference().unbind();
+            
+            ofSetColor(255);
+            float x = (ofGetFrameNum() - startFrame) % int(inputImage.getWidth()) - inputImage.getWidth()/2.0;
+            ofLine(x, -inputImage.getHeight()/2, x, inputImage.getHeight()/2);
         }
         ofPopMatrix();
     }
@@ -53,5 +78,34 @@ void ImageSynth::draw(){
 ImageSynth::~ImageSynth(){
     for (int i = 0; i < filterSize; i++) {
         synth[i]->free();
+    }
+}
+
+void ImageSynth::createMesh(){
+    mesh.setMode(OF_PRIMITIVE_TRIANGLES);
+    stepSize = 4;
+    ySteps = inputImage.getHeight() / stepSize;
+    xSteps = inputImage.getWidth() / stepSize;
+    for(int y = 0; y < ySteps; y++) {
+        for(int x = 0; x < xSteps; x++) {
+            mesh.addVertex(ofVec3f(x * stepSize - inputImage.getWidth()/2.0,
+                                   y * stepSize - inputImage.getHeight()/2.0,
+                                   3.0 * (depthImage.getColor(x * stepSize, y * stepSize).getBrightness() - 127)));
+            mesh.addTexCoord(ofVec2f(x * stepSize, y * stepSize));
+        }
+    }
+    for(int y = 0; y + 1 < ySteps; y++) {
+        for(int x = 0; x + 1 < xSteps; x++) {
+            int nw = y * xSteps + x;
+            int ne = nw + 1;
+            int sw = nw + xSteps;
+            int se = sw + 1;
+            mesh.addIndex(nw);
+            mesh.addIndex(ne);
+            mesh.addIndex(se);
+            mesh.addIndex(nw);
+            mesh.addIndex(se);
+            mesh.addIndex(sw);
+        }
     }
 }
