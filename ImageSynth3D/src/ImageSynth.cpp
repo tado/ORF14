@@ -3,7 +3,7 @@
 ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(1.4, i) + 80);
+        synth[i]->set("freq", powf(1.2, i) + 80);
         synth[i]->set("detune", ofRandom(0.9,1.1));
         synth[i]->create();
         
@@ -33,18 +33,19 @@ void ImageSynth::update(){
 void ImageSynth::draw(){
     if (inputImage.getWidth() > 0) {
         ofPushMatrix();
-        ofTranslate(pos);
-
-        ofRotateX(rot.x);
-        ofRotateY(rot.y);
-        ofRotateZ(rot.z);
-        rot += rotSpeed;
+        {
+            ofTranslate(pos);
+            ofRotateX(rot.x);
+            ofRotateY(rot.y);
+            ofRotateZ(rot.z);
+            rot += rotSpeed;
         
-        ofSetColor(255, 180);
-        inputImage.draw(-inputImage.getWidth()/2.0, -inputImage.getHeight()/2.0);
-        ofSetColor(255);
-        float x = (ofGetFrameNum() - startFrame) % int(inputImage.getWidth()) - inputImage.getWidth()/2;;
-        ofLine(x, -inputImage.getHeight()/2.0, x, inputImage.getHeight()/2.0);
+            ofSetColor(255, 200);
+            inputImage.draw(-inputImage.getWidth()/2.0, -inputImage.getHeight()/2.0);
+            ofSetColor(255);
+            float x = (ofGetFrameNum() - startFrame) % int(inputImage.getWidth()) - inputImage.getWidth()/2;;
+            ofLine(x, -inputImage.getHeight()/2.0, x, inputImage.getHeight()/2.0);
+        }
         ofPopMatrix();
     }
 }
