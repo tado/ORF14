@@ -3,7 +3,7 @@
 ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(1.15, i) + 80);
+        synth[i]->set("freq", powf(1.17, i) + 80);
         synth[i]->set("detune", ofRandom(0.9,1.1));
         synth[i]->create();
         
@@ -15,18 +15,22 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     inputImage = synthImage = image;
     
     // modify image
-    synthImage.resize(ofGetWidth(), filterSize);
-    synthImage.setImageType(OF_IMAGE_GRAYSCALE);
-    
     cv::Mat src_mat, dst_mat;
     src_mat = ofxCv::toCv(inputImage);
-    cv::medianBlur(src_mat, dst_mat, 101);
+    //cv::medianBlur(src_mat, dst_mat, 101);
+    cv::GaussianBlur(src_mat, dst_mat, cv::Size(121,121), 120, 120);
     ofxCv::toOf(dst_mat, depthImage);
     depthImage.update();
+    
+    //synthImage = depthImage;
+    synthImage.resize(ofGetWidth(), filterSize);
+    synthImage.setImageType(OF_IMAGE_GRAYSCALE);
     
     // init rotation
     rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
     rotSpeed = ofVec3f(ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed));
+    
+    
     
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     createMesh();
@@ -62,7 +66,7 @@ void ImageSynth::draw(){
             ofRotateZ(rot.z);
             rot += rotSpeed;
         
-            ofSetColor(255);
+            ofSetColor(255, 210);
             inputImage.getTextureReference().bind();
             mesh.draw();
             inputImage.getTextureReference().unbind();

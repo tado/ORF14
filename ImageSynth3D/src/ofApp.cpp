@@ -5,11 +5,11 @@
 void ofApp::setup(){
     ofSetFrameRate(60);
     ofBackground(0);
-    ofSetLineWidth(3.0);
+    ofSetLineWidth(1.0);
     cam.setFarClip(100000);
     cam.setFov(100);
 
-    //ofxSuperColliderServer::init();
+    ofxSuperColliderServer::init();
     fx = new ofxSCSynth("fx");
     fx->create();
 }
