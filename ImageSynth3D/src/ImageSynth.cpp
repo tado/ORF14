@@ -3,7 +3,7 @@
 ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(1.2, i) + 80);
+        synth[i]->set("freq", powf(1.15, i) + 80);
         synth[i]->set("detune", ofRandom(0.9,1.1));
         synth[i]->create();
         
@@ -36,7 +36,7 @@ void ImageSynth::update(){
     sumLevel = 0;
     scanX = (ofGetFrameNum() - startFrame) % int(synthImage.getWidth());
     for (int i = 0; i < filterSize; i++) {
-        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize));
+        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 0.8);
     }
     
     /*
@@ -69,7 +69,7 @@ void ImageSynth::draw(){
             
             ofSetColor(255);
             float x = (ofGetFrameNum() - startFrame) % int(inputImage.getWidth()) - inputImage.getWidth()/2.0;
-            ofLine(x, -inputImage.getHeight()/2, x, inputImage.getHeight()/2);
+            ofLine(x, -inputImage.getHeight()*1000, x, inputImage.getHeight()*1000);
         }
         ofPopMatrix();
     }
