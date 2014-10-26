@@ -5,7 +5,7 @@
 
 class ImageSynth {
 public:
-    ImageSynth(ofImage image, ofVec3f pos, ofVec2f draggedPos);
+    ImageSynth(ofImage image, ofVec3f pos, float freqRatio);
     ~ImageSynth();
     void update();
     void draw();

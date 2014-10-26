@@ -1,8 +1,8 @@
 #include "ImageSynth.h"
 
-ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, ofVec2f draggedPos){
+ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, float _freqRatio){
     
-    freqRatio = ofMap(draggedPos.y, 0, ofGetHeight(), 1.0, 1.4);
+    freqRatio = _freqRatio;
     
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
@@ -32,9 +32,7 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, ofVec2f draggedPos){
     // init rotation
     rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
     rotSpeed = ofVec3f(ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed));
-    
-    
-    
+        
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     createMesh();
 }
@@ -45,18 +43,6 @@ void ImageSynth::update(){
     for (int i = 0; i < filterSize; i++) {
         synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 0.8);
     }
-    
-    /*
-    float mod = sin(scanX / 100.0) * 4.0;
-    for(int y = 0; y < ySteps; y++) {
-        for(int x = 0; x < xSteps; x++) {
-            int i = y * xSteps + x;
-            mesh.setVertex(i, ofVec3f(x * stepSize - inputImage.getWidth()/2.0,
-                                      y * stepSize - inputImage.getHeight()/2.0,
-                                      mod * (depthImage.getColor(x * stepSize, y * stepSize).getBrightness() - 127)));
-        }
-    }
-     */
 }
 
 void ImageSynth::draw(){

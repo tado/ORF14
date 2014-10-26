@@ -27,4 +27,7 @@ public:
     ofxSCSynth *fx;
     deque<ImageSynth*> imageSynths;
     ofEasyCam cam;
+    
+    ofxPanel gui;
+    ofxFloatSlider freqRatio;
 };

@@ -12,6 +12,9 @@ void ofApp::setup(){
     ofxSuperColliderServer::init();
     fx = new ofxSCSynth("fx");
     fx->create();
+    
+    gui.setup();
+    gui.add(freqRatio.setup("freqRatio", 1.1, 1.0, 2.0));
 }
 
 //--------------------------------------------------------------
@@ -30,6 +33,8 @@ void ofApp::draw(){
     }
     cam.end();
     ofDisableDepthTest();
+    
+    gui.draw();
 }
 
 void ofApp::dragEvent(ofDragInfo dragInfo){
@@ -43,8 +48,8 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         
         float size = 500;
         ofVec3f pos = ofVec3f(ofRandom(-size, size), ofRandom(-size, size), ofRandom(-size, size));
-        ImageSynth *s = new ImageSynth(draggedImages[0], pos, ofVec2f(mouseX, mouseY));
-        imageSynths.push_back(s);
+        ImageSynth *s = new ImageSynth(draggedImages[0], pos, freqRatio);
+        imageSynths.push_back(s);        
     }
 }
 
