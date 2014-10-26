@@ -24,10 +24,15 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    void zscaleChanged(float & zscale);
+    void fovChanged(float & fov);
+    
     ofxSCSynth *fx;
     deque<ImageSynth*> imageSynths;
     ofEasyCam cam;
     
     ofxPanel gui;
     ofxFloatSlider freqRatio;
+    ofxFloatSlider zscale;
+    ofxFloatSlider fov;
 };

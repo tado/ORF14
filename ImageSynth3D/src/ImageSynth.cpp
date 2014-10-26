@@ -32,7 +32,8 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, float _freqRatio){
     // init rotation
     rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
     rotSpeed = ofVec3f(ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed));
-        
+    
+    zscale = 1.0;
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     createMesh();
 }
@@ -54,7 +55,8 @@ void ImageSynth::draw(){
             ofRotateY(rot.y);
             ofRotateZ(rot.z);
             rot += rotSpeed;
-        
+
+            ofScale(1.0, 1.0, zscale);
             ofSetColor(255, 210);
             inputImage.getTextureReference().bind();
             mesh.draw();
@@ -83,7 +85,7 @@ void ImageSynth::createMesh(){
         for(int x = 0; x < xSteps; x++) {
             mesh.addVertex(ofVec3f(x * stepSize - inputImage.getWidth()/2.0,
                                    y * stepSize - inputImage.getHeight()/2.0,
-                                   3.0 * (depthImage.getColor(x * stepSize, y * stepSize).getBrightness() - 127)));
+                                   (depthImage.getColor(x * stepSize, y * stepSize).getBrightness() - 127)));
             mesh.addTexCoord(ofVec2f(x * stepSize, y * stepSize));
         }
     }

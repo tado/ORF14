@@ -11,7 +11,7 @@ public:
     void draw();
     void createMesh();
     
-    static const int filterSize = 40;
+    static const int filterSize = 50;
     ofxSCSynth *synth[filterSize];
     int scanX;
     int startFrame;
@@ -22,6 +22,7 @@ public:
     ofVec3f rotSpeed;
     float sumLevel;
     float freqRatio;
+    float zscale;
     const float baseSpeed = 0.05;
     
     ofMesh mesh;

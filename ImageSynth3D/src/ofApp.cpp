@@ -6,15 +6,22 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofBackground(0);
     ofSetLineWidth(1.0);
-    cam.setFarClip(100000);
-    cam.setFov(110);
+    //cam.setFarClip(100000);
+    //cam.setFov(110);
 
-    //ofxSuperColliderServer::init();
+    ofxSuperColliderServer::init();
     fx = new ofxSCSynth("fx");
     fx->create();
     
+    zscale.addListener(this, &ofApp::zscaleChanged);
+    fov.addListener(this, &ofApp::fovChanged);
     gui.setup();
-    gui.add(freqRatio.setup("freqRatio", 1.2, 1.0, 2.0));
+    gui.add(freqRatio.setup("freqRatio", 1.3, 1.0, 2.0));
+    gui.add(zscale.setup("z-scale", 0.0, 0.0, 10.0));
+    gui.add(fov.setup("fov", 60, 10, 180));
+    gui.loadFromFile("settings.xml");
+    
+    cam.setFov(fov);
 }
 
 //--------------------------------------------------------------
@@ -49,6 +56,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         float size = 500;
         ofVec3f pos = ofVec3f(ofRandom(-size, size), ofRandom(-size, size), ofRandom(-size, size));
         ImageSynth *s = new ImageSynth(draggedImages[0], pos, freqRatio);
+        s->zscale = zscale;
         imageSynths.push_back(s);        
     }
 }
@@ -81,6 +89,15 @@ void ofApp::keyPressed(int key){
     }
 }
 
+void ofApp::zscaleChanged(float & zscale){
+    for (int i = 0; i < imageSynths.size(); i++) {
+        imageSynths[i]->zscale = zscale;
+    }
+}
+
+void ofApp::fovChanged(float & fov){
+    cam.setFov(fov);
+}
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 
