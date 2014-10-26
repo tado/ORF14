@@ -11,7 +11,7 @@ public:
     void draw();
     void createMesh();
     
-    static const int filterSize = 50;
+    static const int filterSize = 40;
     ofxSCSynth *synth[filterSize];
     int scanX;
     int startFrame;

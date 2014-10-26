@@ -7,14 +7,14 @@ void ofApp::setup(){
     ofBackground(0);
     ofSetLineWidth(1.0);
     cam.setFarClip(100000);
-    cam.setFov(100);
+    cam.setFov(110);
 
-    ofxSuperColliderServer::init();
+    //ofxSuperColliderServer::init();
     fx = new ofxSCSynth("fx");
     fx->create();
     
     gui.setup();
-    gui.add(freqRatio.setup("freqRatio", 1.1, 1.0, 2.0));
+    gui.add(freqRatio.setup("freqRatio", 1.2, 1.0, 2.0));
 }
 
 //--------------------------------------------------------------

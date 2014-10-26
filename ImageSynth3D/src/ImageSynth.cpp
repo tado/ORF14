@@ -6,7 +6,7 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, float _freqRatio){
     
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(freqRatio, i) + 50);
+        synth[i]->set("freq", powf(freqRatio, i) + 80);
         synth[i]->set("detune", ofRandom(0.9,1.1));
         synth[i]->create();
         
