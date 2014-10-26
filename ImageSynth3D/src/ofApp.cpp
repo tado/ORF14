@@ -43,7 +43,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         
         float size = 500;
         ofVec3f pos = ofVec3f(ofRandom(-size, size), ofRandom(-size, size), ofRandom(-size, size));
-        ImageSynth *s = new ImageSynth(draggedImages[0], pos);
+        ImageSynth *s = new ImageSynth(draggedImages[0], pos, ofVec2f(mouseX, mouseY));
         imageSynths.push_back(s);
     }
 }

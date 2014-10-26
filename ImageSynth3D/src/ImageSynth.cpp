@@ -1,9 +1,12 @@
 #include "ImageSynth.h"
 
-ImageSynth::ImageSynth(ofImage image, ofVec3f _pos){
+ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, ofVec2f draggedPos){
+    
+    freqRatio = ofMap(draggedPos.y, 0, ofGetHeight(), 1.0, 1.4);
+    
     for (int i = 0; i < filterSize; i++) {
         synth[i] = new ofxSCSynth("simpleSine");
-        synth[i]->set("freq", powf(1.17, i) + 80);
+        synth[i]->set("freq", powf(freqRatio, i) + 50);
         synth[i]->set("detune", ofRandom(0.9,1.1));
         synth[i]->create();
         

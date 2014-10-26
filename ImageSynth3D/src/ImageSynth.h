@@ -5,7 +5,7 @@
 
 class ImageSynth {
 public:
-    ImageSynth(ofImage image, ofVec3f pos);
+    ImageSynth(ofImage image, ofVec3f pos, ofVec2f draggedPos);
     ~ImageSynth();
     void update();
     void draw();
@@ -21,6 +21,7 @@ public:
     ofVec3f rot;
     ofVec3f rotSpeed;
     float sumLevel;
+    float freqRatio;
     const float baseSpeed = 0.05;
     
     ofMesh mesh;
