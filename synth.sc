@@ -10,6 +10,7 @@ SynthDef("fx", {
 	var in, out;
 	in = In.ar(3, 2);
 	out = LeakDC.ar(in);
+	/*
 	out = Compander.ar(out, out,
 		thresh:0.1,
 		slopeBelow: 1,
@@ -17,7 +18,8 @@ SynthDef("fx", {
 		clampTime: 0.01,
 		relaxTime: 0.01,
 		mul: 0.8);
-	out = GVerb.ar(out, roomsize: 20, revtime: 3);
+		*/
+	//out = GVerb.ar(out, roomsize: 20, revtime: 3);
 
 	Out.ar(0, out);
 }).store;

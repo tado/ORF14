@@ -36,6 +36,7 @@ public:
     
     ofxPanel gui;
     ofxToggle autoScan;
+    ofxToggle useCam;
     ofxFloatSlider ratio;
     ofxFloatSlider freqOffset;
     ofxFloatSlider scanSpeed;

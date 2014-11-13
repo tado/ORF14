@@ -21,10 +21,11 @@ void ofApp::setup(){
 
     gui.setup();
     gui.add(autoScan.setup("auto scan", true));
+    gui.add(useCam.setup("use camera", false));
     gui.add(scanSpeed.setup("scan speed", 1.0, 0.0, 5.0));
     gui.add(ratio.setup("freq ratio", 1.15, 1.0, 1.3));
     gui.add(freqOffset.setup("freq offset", 20, 0, 400));
-    gui.add(amp.setup("amplitude", 0.01, 0.0, 0.04));
+    gui.add(amp.setup("amplitude", 0.01, 0.0, 0.1));
     gui.loadFromFile("settings.xml");
     
     
