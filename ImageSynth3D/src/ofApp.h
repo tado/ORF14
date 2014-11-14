@@ -5,6 +5,7 @@
 #include "ofxSuperCollider.h"
 #include "ofxGui.h"
 #include "ImageSynth.h"
+#include "SawSynth.h"
 
 class ofApp : public ofBaseApp{
     
@@ -27,7 +28,7 @@ public:
     void zscaleChanged(float & zscale);
     void fovChanged(float & fov);
     
-    ofxSCSynth *fx;
+    ofxSCSynth *fx, *sawFx;
     deque<ImageSynth*> imageSynths;
     ofEasyCam cam;
     
@@ -35,4 +36,7 @@ public:
     ofxFloatSlider freqRatio;
     ofxFloatSlider zscale;
     ofxFloatSlider fov;
+    
+    int sawNum;
+    deque<SawSynth *> saws;
 };

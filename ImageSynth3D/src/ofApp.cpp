@@ -8,16 +8,20 @@ void ofApp::setup(){
     ofSetLineWidth(1.0);
     //cam.setFarClip(100000);
     //cam.setFov(110);
+    
+    sawNum = 0;
 
     ofxSuperColliderServer::init();
     fx = new ofxSCSynth("fx");
     fx->create();
+    sawFx = new ofxSCSynth("col_closefx");
+    sawFx->create();
     
     zscale.addListener(this, &ofApp::zscaleChanged);
     fov.addListener(this, &ofApp::fovChanged);
     gui.setup();
     gui.add(freqRatio.setup("freqRatio", 1.3, 1.0, 2.0));
-    gui.add(zscale.setup("z-scale", 0.0, 0.0, 10.0));
+    // gui.add(zscale.setup("z-scale", 0.0, 0.0, 10.0));
     gui.add(fov.setup("fov", 60, 10, 180));
     gui.loadFromFile("settings.xml");
     
@@ -86,6 +90,10 @@ void ofApp::keyPressed(int key){
             }
             imageSynths.pop_back();
         }
+    }
+    if (key == 'z') {
+        SawSynth *saw = new SawSynth(sawNum);
+        sawNum++;
     }
 }
 

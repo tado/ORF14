@@ -42,8 +42,10 @@ void ImageSynth::update(){
     sumLevel = 0;
     scanX = (ofGetFrameNum() - startFrame) % int(synthImage.getWidth());
     for (int i = 0; i < filterSize; i++) {
-        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 0.8);
+        synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 0.5);
     }
+    
+    zscale = ofNoise(ofGetElapsedTimef() - startFrame) * 1.0;
 }
 
 void ImageSynth::draw(){

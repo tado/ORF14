@@ -13,6 +13,7 @@
 		10B69DE456AED1288FC9316B /* Tracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A810DF70319A10353588F5DB /* Tracker.cpp */; };
 		14A503607FFA09AE34186B76 /* ofxSCGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15ACE3D73F384D1B71D52792 /* ofxSCGroup.cpp */; };
 		169D3C72FDE6C5590A1616F5 /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B6A03390302D5A2C9F0E4AB /* ofxCvFloatImage.cpp */; };
+		1809E1671A158EB0009C5498 /* SawSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1809E1651A158EB0009C5498 /* SawSynth.cpp */; };
 		187A685119F4FCFB0090E7E8 /* ImageSynth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 187A684F19F4FCFB0090E7E8 /* ImageSynth.cpp */; };
 		18881C1F19F44611003B76D6 /* libscsynth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18881B2019F44611003B76D6 /* libscsynth.a */; };
 		18881C2019F44611003B76D6 /* libsndfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18881B2119F44611003B76D6 /* libsndfile.a */; };
@@ -141,6 +142,8 @@
 		15F2C6477A769C03A56D1401 /* ofxSlider.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSlider.cpp; path = ../../../addons/ofxGui/src/ofxSlider.cpp; sourceTree = SOURCE_ROOT; };
 		178547E33CE398C7B59F08AB /* ContourFinder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ContourFinder.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ContourFinder.h; sourceTree = SOURCE_ROOT; };
 		17E65988300FBD9AAA2CD0CA /* ofxGui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxGui.h; path = ../../../addons/ofxGui/src/ofxGui.h; sourceTree = SOURCE_ROOT; };
+		1809E1651A158EB0009C5498 /* SawSynth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SawSynth.cpp; sourceTree = "<group>"; };
+		1809E1661A158EB0009C5498 /* SawSynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SawSynth.h; sourceTree = "<group>"; };
 		187A684F19F4FCFB0090E7E8 /* ImageSynth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageSynth.cpp; sourceTree = "<group>"; };
 		187A685019F4FCFB0090E7E8 /* ImageSynth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageSynth.h; sourceTree = "<group>"; };
 		18881AD919F44611003B76D6 /* dfftlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dfftlib.h; sourceTree = "<group>"; };
@@ -1274,6 +1277,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				187A684F19F4FCFB0090E7E8 /* ImageSynth.cpp */,
 				187A685019F4FCFB0090E7E8 /* ImageSynth.h */,
+				1809E1651A158EB0009C5498 /* SawSynth.cpp */,
+				1809E1661A158EB0009C5498 /* SawSynth.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1462,6 +1467,7 @@
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,
+				1809E1671A158EB0009C5498 /* SawSynth.cpp in Sources */,
 				B6840996567E78436F7ECFAB /* ETF.cpp in Sources */,
 				F76B4A79BD8DE4854141CB47 /* fdog.cpp in Sources */,
 				EBCDE831EFAE08274E799C97 /* Calibration.cpp in Sources */,
