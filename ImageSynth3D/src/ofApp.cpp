@@ -10,6 +10,7 @@ void ofApp::setup(){
     //cam.setFov(110);
     
     sawNum = 0;
+    zscaleRatio = currentZscale = 0.0;
 
     ofxSuperColliderServer::init();
     fx = new ofxSCSynth("fx");
@@ -32,6 +33,11 @@ void ofApp::setup(){
 void ofApp::update(){
     for (int i = 0; i < imageSynths.size(); i++) {
         imageSynths[i]->update();
+    }
+    
+    currentZscale += (zscaleRatio - currentZscale) / 1000.0;
+    for (int i = 0; i < imageSynths.size(); i++) {
+        imageSynths[i]->zscaleRatio = currentZscale;
     }
 }
 
@@ -94,6 +100,7 @@ void ofApp::keyPressed(int key){
     if (key == 'z') {
         SawSynth *saw = new SawSynth(sawNum);
         sawNum++;
+        zscaleRatio += 1.0;
     }
 }
 

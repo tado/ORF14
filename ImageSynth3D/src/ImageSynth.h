@@ -23,6 +23,7 @@ public:
     float sumLevel;
     float freqRatio;
     float zscale;
+    float zscaleRatio;
     const float baseSpeed = 0.05;
     
     ofMesh mesh;

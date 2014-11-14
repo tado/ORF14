@@ -33,7 +33,8 @@ ImageSynth::ImageSynth(ofImage image, ofVec3f _pos, float _freqRatio){
     rot = ofVec3f(ofRandom(360), ofRandom(360), ofRandom(360));
     rotSpeed = ofVec3f(ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed), ofRandom(-baseSpeed, baseSpeed));
     
-    zscale = 1.0;
+    zscale = 0.0;
+    zscaleRatio = 0.0;
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     createMesh();
 }
@@ -45,7 +46,7 @@ void ImageSynth::update(){
         synth[filterSize - i - 1]->set("mul", (1.0 - synthImage.getColor(scanX, i).getBrightness() / 255.0) / float(filterSize) * 0.5);
     }
     
-    zscale = ofNoise(ofGetElapsedTimef() - startFrame) * 1.0;
+    zscale = ofNoise((ofGetElapsedTimef() - startFrame) / 10.0) * zscaleRatio;
 }
 
 void ImageSynth::draw(){

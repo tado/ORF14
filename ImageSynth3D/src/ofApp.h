@@ -39,4 +39,5 @@ public:
     
     int sawNum;
     deque<SawSynth *> saws;
+    float zscaleRatio, currentZscale;
 };
