@@ -105,6 +105,18 @@ void ofApp::keyPressed(int key){
         SawSynth *saw = new SawSynth(sawNum);
         sawNum++;
         zscaleRatio += 1.0;
+        saws.push_back(saw);
+    }
+    if (key == 'k') {
+        for (int j = 0; j < imageSynths.size(); j++) {
+            for (int i = 0; i < imageSynths[j]->filterSize; i++) {
+                imageSynths[j]->synth[i]->free();
+            }
+        }
+        for (int i = 0; i < saws.size(); i++) {
+            saws[i]->synth->free();
+        }
+        imageSynths.clear();
     }
 }
 
