@@ -33,11 +33,12 @@ public:
     ofEasyCam cam;
     
     ofxPanel gui;
-    ofxFloatSlider freqRatio;
+    //ofxFloatSlider freqRatio;
     ofxFloatSlider zscale;
     ofxFloatSlider fov;
     
     int sawNum;
     deque<SawSynth *> saws;
     float zscaleRatio, currentZscale;
+    float freqRatio;
 };
