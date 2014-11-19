@@ -28,7 +28,7 @@ void ofApp::setup(){
     // gui.add(fov.setup("fov", 60, 10, 180));
     // gui.loadFromFile("settings.xml");
     
-    cam.setFov(80);
+    cam.setFov(100);
 }
 
 //--------------------------------------------------------------
@@ -53,7 +53,10 @@ void ofApp::draw(){
     cam.end();
     ofDisableDepthTest();
     
-    gui.draw();
+    // gui.draw();
+    
+    ofColor(255);
+    ofCircle(mouseX, mouseY, 10);
 }
 
 void ofApp::dragEvent(ofDragInfo dragInfo){

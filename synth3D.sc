@@ -42,7 +42,7 @@ SynthDef("col_closefx", {
 	arg lpf=440, rq=0.5, amp=0.8;
 	var in, out;
 	in = In.ar(5, 2);
-	32.do({ in = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 4.0) });
+	32.do({ in = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 8.0) });
 	out = CompanderD.ar(in) * amp;
 	Out.ar(0, out);
 }).store;
