@@ -4,7 +4,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
-    ofxSuperColliderServer::init();
+    ofxSuperColliderServer::init(57110, 96000);
     
     
     fx = new ofxSCSynth("fx");

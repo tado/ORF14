@@ -14,7 +14,7 @@ void ofApp::setup(){
     zscaleRatio = currentZscale = 0.0;
     freqRatio = 1.1;
 
-    ofxSuperColliderServer::init();
+    ofxSuperColliderServer::init(57110, 96000);
     fx = new ofxSCSynth("fx");
     fx->create();
     sawFx = new ofxSCSynth("col_closefx");

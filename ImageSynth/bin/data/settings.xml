@@ -4,5 +4,6 @@
 	<freq_ratio>1.1005</freq_ratio>
 	<freq_offset>50</freq_offset>
 <group/>
-<amplitude>0.02</amplitude>
+<amplitude>0.0105</amplitude>
+<use_camera>0</use_camera>
 </group>
