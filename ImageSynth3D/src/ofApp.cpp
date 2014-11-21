@@ -3,6 +3,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    //ofSetWindowPosition(1920, 0);
+    
     ofSetFrameRate(60);
     ofBackground(0);
     ofSetLineWidth(1.0);
