@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxCv.h"
 #include "ofxSuperCollider.h"
-#include "ofxGui.h"
+#include "ofxUI.h"
 
 class ofApp : public ofBaseApp{
     
@@ -22,9 +22,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-    
-    void ratioChanged(float & ratio);
-    void freqOffsetChanged(float & freqOffset);
+    void guiEvent(ofxUIEventArgs &e);
     
     ofImage inputImage, synthImage;
 
@@ -34,11 +32,8 @@ public:
     float scanX;
     int startFrame;
     
-    ofxPanel gui;
-    ofxToggle autoScan;
-    ofxToggle useCam;
-    ofxFloatSlider ratio;
-    ofxFloatSlider freqOffset;
-    ofxFloatSlider scanSpeed;
-    ofxFloatSlider amp;
+    float ratio;
+    float freqOffset;
+    
+    ofxUICanvas *gui;
 };

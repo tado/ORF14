@@ -3,8 +3,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(0);
-    ofxSuperColliderServer::init(57110, 96000);
+    ofBackground(63);
+    //ofxSuperColliderServer::init(57110, 96000);
+    ofxSuperColliderServer::init();
     
     
     fx = new ofxSCSynth("fx");
@@ -16,18 +17,25 @@ void ofApp::setup(){
         synth[i]->create();
     }
     
-    ratio.addListener(this, &ofApp::ratioChanged);
-    freqOffset.addListener(this, &ofApp::freqOffsetChanged);
+    gui = new ofxUICanvas();
+    gui->init(10, 10, 200, 200);
+    gui->addSpacer();
+    gui->addLabel("IMAGE -> AUDIO");
+    gui->addSpacer();
+    gui->addToggle("AUTO SCAN", true);
+    gui->addSlider("SCAN SPEED", 0.0, 5.0, 1.0);
+    gui->addSlider("FREQ RATIO", 1.0, 1.3, 1.15);
+    gui->addSlider("FREQ OFFSET", 0, 400, 50);
+    gui->addSlider("AMPLITUDE", 0.0, 0.1, 0.01);
+    gui->addSpacer();
+    gui->addButton("SAVE SETTINGS", false);
+    gui->addSpacer();
+    gui->loadSettings("main.xml");
+    gui->autoSizeToFitWidgets();
+    ofAddListener(gui->newGUIEvent,this,&ofApp::guiEvent);
 
-    gui.setup();
-    gui.add(autoScan.setup("auto scan", true));
-    gui.add(useCam.setup("use camera", false));
-    gui.add(scanSpeed.setup("scan speed", 1.0, 0.0, 5.0));
-    gui.add(ratio.setup("freq ratio", 1.15, 1.0, 1.3));
-    gui.add(freqOffset.setup("freq offset", 20, 0, 400));
-    gui.add(amp.setup("amplitude", 0.01, 0.0, 0.1));
-    gui.loadFromFile("settings.xml");
-    
+    ofxUISlider *gratio = (ofxUISlider *)gui->getWidget("FREQ RATIO"); ratio = gratio->getValue();
+    ofxUISlider *goffset = (ofxUISlider *)gui->getWidget("FREQ OFFSET"); freqOffset = goffset->getValue();
     
     for (int i = 0; i < filterSize; i++) {
         synth[i]->set("freq", powf(ratio, i) + freqOffset);
@@ -36,6 +44,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    ofxUIToggle *gautoscan = (ofxUIToggle *)gui->getWidget("AUTO SCAN"); bool autoScan = gautoscan->getValue();
+    ofxUISlider *gscanSpeed = (ofxUISlider *)gui->getWidget("SCAN SPEED"); float scanSpeed = gscanSpeed->getValue();
+    ofxUISlider *gamp = (ofxUISlider *)gui->getWidget("AMPLITUDE"); float amp = gamp->getValue();
+    
     if (autoScan) {
         scanX += scanSpeed;
         if (scanX > ofGetWidth()) {
@@ -64,18 +76,24 @@ void ofApp::draw(){
     }
     
     ofSetColor(255);
-    gui.draw();
 }
 
-void ofApp::ratioChanged(float & ratio){
-    for (int i = 0; i < filterSize; i++) {
-        synth[i]->set("freq", powf(ratio, i) + freqOffset);
+void ofApp::guiEvent(ofxUIEventArgs &e){
+    string name = e.widget->getName();
+    if(name == "SAVE SETTINGS"){
+        gui->saveSettings("main.xml");
     }
-}
-
-void ofApp::freqOffsetChanged(float & freqOffset){
-    for (int i = 0; i < filterSize; i++) {
-        synth[i]->set("freq", powf(ratio, i) + freqOffset);
+    if (name == "FREQ RATIO") {
+        ofxUISlider *gratio = (ofxUISlider *)gui->getWidget("FREQ RATIO"); ratio = gratio->getValue();
+        for (int i = 0; i < filterSize; i++) {
+            synth[i]->set("freq", powf(ratio, i) + freqOffset);
+        }
+    }
+    if (name == "FREQ OFFSET") {
+        ofxUISlider *goffset = (ofxUISlider *)gui->getWidget("FREQ OFFSET"); freqOffset = goffset->getValue();
+        for (int i = 0; i < filterSize; i++) {
+            synth[i]->set("freq", powf(ratio, i) + freqOffset);
+        }
     }
 }
 
@@ -95,11 +113,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         
         // modify image
         synthImage.resize(ofGetWidth(), filterSize);
-        //cv::Mat src_mat, dst_mat;
-        //src_mat = ofxCv::toCv(inputImage);
-        //copyGray(src_mat, dst_mat);
-        //cv::medianBlur(src_mat, dst_mat, 11);
-        //ofxCv::toOf(dst_mat, inputImage);
         synthImage.setImageType(OF_IMAGE_GRAYSCALE);
         synthImage.update();
         
